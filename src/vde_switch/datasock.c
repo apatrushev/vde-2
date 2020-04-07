@@ -87,7 +87,11 @@ static int send_datasock(int fd_ctl, int fd_data, void *packet, int len, int por
 {
 	if (send(fd_data, packet, len, 0) < 0) {
 		int rv=errno;
-		if(rv != EAGAIN && rv != EWOULDBLOCK) 
+		if(rv != EAGAIN && rv != EWOULDBLOCK
+#ifdef VDE_DARWIN
+		&& rv != ENOBUFS
+#endif
+		)
 			printlog(LOG_WARNING,"send_sockaddr port %d: %s",port,strerror(errno));
 		else
 			rv=EWOULDBLOCK;
