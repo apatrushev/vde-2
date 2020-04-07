@@ -22,6 +22,8 @@
  * Enable the new packet queueing. Experimental but recommended
  * (expecially with Darwin and other BSDs)
  */
-#define VDE_PQ
+#ifdef VDE_DARWIN
+#define VDE_PQ2
+#endif
 
 #endif
